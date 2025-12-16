@@ -1,7 +1,7 @@
 
-## ✅ HIGH-LEVEL FLOW OVERVIEW:
+##  HIGH-LEVEL FLOW OVERVIEW:
 
-### 🔹 1. Server is started
+###  1. Server is started
 
 ```java
 ServerSocket serverSocket = new ServerSocket(1234);
@@ -9,7 +9,7 @@ Server server = new Server(serverSocket);
 server.startServer();  // starts accepting clients
 ```
 
-### 🔹 2. Client connects to server
+###  2. Client connects to server
 
 ```java
 Socket socket = new Socket("localhost", 1234);
@@ -18,7 +18,7 @@ client.listenForMessage();  // thread: listen for broadcasts
 client.sendMessage();       // main thread: send input to server
 ```
 
-### 🔹 3. Server accepts client and creates ClientHandler
+###  3. Server accepts client and creates ClientHandler
 
 ```java
 Socket socket = serverSocket.accept();
@@ -26,7 +26,7 @@ ClientHandler clientHandler = new ClientHandler(socket);
 new Thread(clientHandler).start();
 ```
 
-### 🔹 4. ClientHandler:
+###  4. ClientHandler:
 
 * Reads username from client
 * Adds itself to `clientHandlers` list
@@ -35,7 +35,7 @@ new Thread(clientHandler).start();
 
 ---
 
-## 🧪 DRY RUN: Step-by-Step Example
+##  DRY RUN: Step-by-Step Example
 
 Let’s say:
 
@@ -47,7 +47,7 @@ Let’s say:
 
 ---
 
-### ✅ Step 1: Start server
+###  Step 1: Start server
 
 ```java
 startServer() → serverSocket.accept()
@@ -57,7 +57,7 @@ startServer() → serverSocket.accept()
 
 ---
 
-### ✅ Step 2: User1 starts client
+###  Step 2: User1 starts client
 
 ```java
 Client("User1") → connects to server
@@ -66,7 +66,7 @@ Client("User1") → connects to server
 → starts `listenForMessage()` thread
 ```
 
-#### 🔁 Server accepts User1:
+####  Server accepts User1:
 
 ```java
 accept()
@@ -76,11 +76,11 @@ accept()
 → broadcasts "Server: User1 has entered the chat"
 ```
 
-✅ Only User1 is in the list, so no one receives this message except console log.
+ Only User1 is in the list, so no one receives this message except console log.
 
 ---
 
-### ✅ Step 3: User1 sends "Hi"
+###  Step 3: User1 sends "Hi"
 
 Client:
 
@@ -100,7 +100,7 @@ message = "User1: Hi"
 
 ---
 
-### ✅ Step 4: User2 joins
+###  Step 4: User2 joins
 
 ```java
 Client("User2") → connects to server
@@ -130,7 +130,7 @@ So:
 
 ---
 
-### ✅ Step 5: User2 sends "Hello"
+###  Step 5: User2 sends "Hello"
 
 ```java
 User2 sends "User2: Hello"
@@ -141,7 +141,7 @@ User2 sends "User2: Hello"
 
 ---
 
-### ✅ Step 6: User1 disconnects (e.g., Ctrl+C or window closes)
+###  Step 6: User1 disconnects (e.g., Ctrl+C or window closes)
 
 This triggers `IOException` in:
 
@@ -158,7 +158,7 @@ while (socket.isConnected()) → throws
 
 ---
 
-## 🔁 Summary of Key Function Calls
+##  Summary of Key Function Calls
 
 | Event                   | Function Calls                                                                       |
 | ----------------------- | ------------------------------------------------------------------------------------ |
@@ -169,7 +169,7 @@ while (socket.isConnected()) → throws
 
 ---
 
-## 🧠 Important Notes
+##  Important Notes
 
 * Each client has **its own thread** via `ClientHandler`
 * `clientHandlers` is shared (static) to enable broadcasting
